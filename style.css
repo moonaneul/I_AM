@@ -1,34 +1,12 @@
 /* style.css */
-:root { --primary-color: #0EA5E9; --accent-color: #10B981; --bg-alt: #F0FDF4; --text-main: #334155; }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Pretendard', sans-serif; color: var(--text-main); line-height: 1.6; }
-a { text-decoration: none; color: inherit; }
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
-header { position: fixed; top: 0; width: 100%; background: #fff; border-bottom: 1px solid #E2E8F0; z-index: 1000; }
-nav { display: flex; justify-content: space-between; align-items: center; height: 70px; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
-.nav-links a { margin-left: 2rem; color: #64748B; font-weight: 500; }
-.nav-links a.active { color: var(--primary-color); font-weight: 700; }
+/* Tailwind 설정과 별개로 내가 짠 디자인을 여기 넣습니다 */
+body { font-family: 'Pretendard', sans-serif; }
 
-.container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
-.page-section { padding: 10rem 0 6rem; }
-.section-title { text-align: center; font-size: 2.2rem; color: var(--primary-color); margin-bottom: 3rem; }
-
-/* 컴포넌트 */
-.btn { padding: 1rem 2rem; border-radius: 8px; font-weight: 600; cursor: pointer; background: var(--accent-color); color: white; display: inline-block; }
-.card { background: #fff; padding: 3rem; border-radius: 16px; border: 1px solid #E2E8F0; }
-.project-item { display: flex; gap: 3rem; padding: 2.5rem; background: var(--bg-alt); border-radius: 16px; margin-bottom: 2rem; }
-.tech-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
-.tech-item { padding: 0.8rem 1.5rem; border: 1px solid #E2E8F0; border-radius: 8px; color: var(--primary-color); font-weight: 600; }
-
-/* 페이지별 특화 디자인 (클래스명 주의!) */
-.about-section { text-align: center; padding: 4rem 2rem; }
-.about-box { max-width: 800px; margin: 0 auto; line-height: 1.8; }
-
-.strengths-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; padding: 2rem; }
-.strength-card { background: white; padding: 2.5rem; border: 1px solid #E2E8F0; border-radius: 12px; }
-
-.projects-list { display: flex; flex-direction: column; gap: 2rem; padding: 2rem; }
-.project-card { display: flex; gap: 2rem; background: var(--bg-alt); padding: 2rem; border-radius: 12px; }
-
-.tech-grid { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
-.tech-badge { background: white; padding: 0.5rem 1rem; border: 1px solid #E2E8F0; border-radius: 6px; color: var(--primary-color); }
+/* 커스텀 마우스 커서 디자인 */
+#custom-cursor {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; /* 구름 크기 */
+    transition: transform 0.1s ease-out, scale 0.2s;
+}
