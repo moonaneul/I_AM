@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>방명록 | 문하늘 포트폴리오</title>
+    
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0EA5E9', 'primary-light': '#7DD3FC', accent: '#10B981',
+                        'bg-color': '#FFFFFF', 'bg-alt': '#F0FDF4', 'text-main': '#334155',
+                        'text-muted': '#64748B', 'border-color': '#E2E8F0',
+                    },
+                    fontFamily: { sans: ['Pretendard', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans text-text-main bg-bg-alt leading-relaxed flex flex-col min-h-screen">
+
+    <header class="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b border-border-color z-[1000]">
+        <nav class="flex justify-between items-center h-[70px] max-w-[1100px] mx-auto px-8 w-full">
+            <div class="font-bold text-[1.2rem] text-primary">
+                <a href="index.html">Mun Haneul.</a>
+            </div>
+            <div class="hidden md:flex gap-8">
+                <a href="index.html" class="font-medium text-text-muted hover:text-primary hover:font-bold transition-colors duration-200">홈</a>
+                <a href="about.html" class="font-medium text-text-muted hover:text-primary hover:font-bold transition-colors duration-200">소개</a>
+                <a href="strengths.html" class="font-medium text-text-muted hover:text-primary hover:font-bold transition-colors duration-200">역량</a>
+                <a href="projects.html" class="font-medium text-text-muted hover:text-primary hover:font-bold transition-colors duration-200">프로젝트</a>
+                <a href="tech.html" class="font-medium text-text-muted hover:text-primary hover:font-bold transition-colors duration-200">기술스택</a>
+                <a href="guestbook.html" class="font-bold text-primary transition-colors duration-200">방명록</a>
+            </div>
+        </nav>
+        
+    </header>
+
+    <main class="flex-1 max-w-[800px] mx-auto w-full px-8 pt-[120px] pb-16">
+        <h2 class="text-center text-[2.2rem] font-bold text-primary mb-8">Guestbook</h2>
+        <p class="text-center text-text-muted mb-8">방문해주셔서 감사합니다. 자유롭게 인사를 남겨주세요!</p>
+
+        <form id="guestbook-form" class="bg-white p-6 rounded-2xl shadow-sm border border-border-color mb-10">
+            <div class="mb-4">
+                <input type="text" id="guest-name" placeholder="이름 (닉네임)" required autocomplete="off"
+                    class="w-full md:w-1/2 px-4 py-3 rounded-lg border border-border-color focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+            </div>
+            <div class="mb-4">
+                <textarea id="guest-message" placeholder="메시지를 남겨주세요 (최대 200자)" required rows="3" maxlength="200"
+                    class="w-full px-4 py-3 rounded-lg border border-border-color focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all resize-none"></textarea>
+            </div>
+            <div class="text-right">
+                <button type="submit" class="bg-accent text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-[#059669] transition-all hover:-translate-y-0.5">
+                    등록하기
+                </button>
+            </div>
+        </form>
+
+        <div id="guestbook-list" class="flex flex-col gap-4">
+            </div>
+    </main>
+
+    <footer class="bg-[#0F172A] text-white py-12 px-8 text-center mt-auto">
+        <p class="text-[#94A3B8] text-[0.9rem]">© 2026 Mun Haneul. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('guestbook-form');
+            const nameInput = document.getElementById('guest-name');
+            const messageInput = document.getElementById('guest-message');
+            const listContainer = document.getElementById('guestbook-list');
+
+            // 저장소 키 이름
+            const STORAGE_KEY = 'mun_portfolio_guestbook';
+
+            // 1. 저장된 방명록 불러오기
+            function loadMessages() {
+                const savedData = localStorage.getItem(STORAGE_KEY);
+                let messages = [];
+                if (savedData) {
+                    messages = JSON.parse(savedData);
+                }
+                
+                listContainer.innerHTML = ''; // 초기화
+                
+                if(messages.length === 0) {
+                    listContainer.innerHTML = '<p class="text-center text-text-muted py-8">아직 등록된 방명록이 없습니다. 첫 번째 주인공이 되어보세요!</p>';
+                    return;
+                }
+
+                // 최신 글이 위로 오도록 렌더링
+                messages.reverse().forEach(renderMessage);
+            }
+
+            // 2. 화면에 하나의 메시지 카드 그리기
+            function renderMessage(data) {
+                const item = document.createElement('div');
+                item.className = 'bg-white p-6 rounded-xl border border-border-color shadow-sm';
+                item.innerHTML = `
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="font-bold text-primary text-lg">${data.name}</span>
+                        <span class="text-xs text-text-muted">${data.date}</span>
+                    </div>
+                    <p class="text-text-main break-keep whitespace-pre-wrap">${data.message}</p>
+                `;
+                listContainer.appendChild(item);
+            }
+
+            // 3. 폼 제출 시 데이터 저장하기
+            form.addEventListener('submit', (e) => {
+                e.preventDefault(); // 페이지 새로고침 방지
+
+                const name = nameInput.value.trim();
+                const message = messageInput.value.trim();
+                if (!name || !message) return;
+
+                // 현재 날짜 구하기
+                const now = new Date();
+                const dateString = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+                const newMessage = { name, message, date: dateString };
+
+                // 기존 데이터 가져오기 -> 새 메시지 추가 -> 다시 저장
+                const savedData = localStorage.getItem(STORAGE_KEY);
+                const messages = savedData ? JSON.parse(savedData) : [];
+                messages.push(newMessage);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+
+                // 화면 갱신 및 입력창 초기화
+                loadMessages();
+                nameInput.value = '';
+                messageInput.value = '';
+            });
+
+            // 페이지 로드 시 최초 실행
+            loadMessages();
+        });
+    </script>
+</body>
+</html>
