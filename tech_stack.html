@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기술스택 | 문하늘 포트폴리오</title>
+    
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+    <style>
+        /* 공통 스타일 */
+        :root {
+            --primary-color: #0EA5E9; --primary-light: #7DD3FC; --accent-color: #10B981; 
+            --bg-color: #FFFFFF; --bg-alt: #F0FDF4; --text-main: #334155; --text-muted: #64748B; --border-color: #E2E8F0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Pretendard', sans-serif; color: var(--text-main); background-color: var(--bg-alt); line-height: 1.6; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; width: 100%; }
+        
+        .page-section { padding: 10rem 0 6rem; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .section-title { text-align: center; font-size: 2.2rem; font-weight: 700; color: var(--primary-color); margin-bottom: 3rem; position: relative; width: 100%; }
+        .section-title::after { content: ''; display: block; width: 60px; height: 4px; background-color: var(--accent-color); margin: 1rem auto 0; border-radius: 2px; }
+
+        header { position: fixed; top: 0; width: 100%; background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); border-bottom: 1px solid var(--border-color); z-index: 1000; }
+        nav { display: flex; justify-content: space-between; align-items: center; height: 70px; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+        .logo { font-weight: 700; font-size: 1.2rem; color: var(--primary-color); }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { font-weight: 500; color: var(--text-muted); transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-color); font-weight: 700; }
+
+        footer { background-color: #0F172A; color: white; padding: 4rem 2rem; text-align: center; margin-top: auto; }
+        .contact-info { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .contact-item { display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .contact-item .material-symbols-outlined { font-size: 1.5rem; color: var(--primary-light); }
+        footer p { color: #94A3B8; font-size: 0.9rem; }
+
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-in.appear { opacity: 1; transform: translateY(0); }
+
+        /* 개별 페이지 특화 스타일 */
+        .tech-container { max-width: 800px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+        .tech-item { background-color: white; padding: 0.8rem 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); font-weight: 600; color: var(--primary-color); box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: all 0.2s; }
+        .tech-item:hover { border-color: var(--accent-color); color: var(--accent-color); transform: translateY(-3px); }
+
+        @media (max-width: 768px) { .nav-links { display: none; } .page-section { padding: 7rem 0 4rem; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html">Mun Haneul.</a></div>
+            <div class="nav-links">
+                <a href="about.html">소개</a>
+                <a href="strengths.html">가치관</a>
+                <a href="projects.html">프로젝트</a>
+                <a href="tech.html" class="active">기술스택</a>
+                <a href="#footer">연락처</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="page-section" id="tech-stack">
+        <div class="container fade-in">
+            <h2 class="section-title">Tech Stack</h2>
+            <div class="tech-container">
+                <div class="tech-item">HTML5/CSS3</div>
+                <div class="tech-item">JavaScript</div>
+                <div class="tech-item">Python</div>
+                <div class="tech-item">Java</div>
+                <div class="tech-item">C / C++</div>
+                <div class="tech-item">MySQL</div>
+                <div class="tech-item">Git / GitHub</div>
+                <div class="tech-item">Figma</div>
+                <div class="tech-item">Linux / Unix</div>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer">
+        <div class="container fade-in">
+            <div class="contact-info">
+                <div class="contact-item"><span class="material-symbols-outlined">person</span><span>문하늘 (Mun Haneul)</span></div>
+                <div class="contact-item"><span class="material-symbols-outlined">phone_iphone</span><span>010-2278-4303</span></div>
+                <div class="contact-item"><span class="material-symbols-outlined">mail</span><span>melody0404@naver.com</span></div>
+            </div>
+            <p>© 2026 Mun Haneul. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('appear'); } });
+            }, { threshold: 0.1 });
+            fadeElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
