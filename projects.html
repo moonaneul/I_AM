@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로젝트 | 문하늘 포트폴리오</title>
+    
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+    <style>
+        /* 공통 스타일 */
+        :root {
+            --primary-color: #0EA5E9; --primary-light: #7DD3FC; --accent-color: #10B981; 
+            --bg-color: #FFFFFF; --bg-alt: #F0FDF4; --text-main: #334155; --text-muted: #64748B; --border-color: #E2E8F0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Pretendard', sans-serif; color: var(--text-main); background-color: var(--bg-color); line-height: 1.6; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; width: 100%; }
+        
+        .page-section { padding: 10rem 0 6rem; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .section-title { text-align: center; font-size: 2.2rem; font-weight: 700; color: var(--primary-color); margin-bottom: 3rem; position: relative; width: 100%; }
+        .section-title::after { content: ''; display: block; width: 60px; height: 4px; background-color: var(--accent-color); margin: 1rem auto 0; border-radius: 2px; }
+
+        header { position: fixed; top: 0; width: 100%; background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); border-bottom: 1px solid var(--border-color); z-index: 1000; }
+        nav { display: flex; justify-content: space-between; align-items: center; height: 70px; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+        .logo { font-weight: 700; font-size: 1.2rem; color: var(--primary-color); }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { font-weight: 500; color: var(--text-muted); transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-color); font-weight: 700; }
+
+        footer { background-color: #0F172A; color: white; padding: 4rem 2rem; text-align: center; margin-top: auto; }
+        .contact-info { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .contact-item { display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .contact-item .material-symbols-outlined { font-size: 1.5rem; color: var(--primary-light); }
+        footer p { color: #94A3B8; font-size: 0.9rem; }
+
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-in.appear { opacity: 1; transform: translateY(0); }
+
+        .btn { display: inline-block; padding: 1rem 2rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; }
+        .btn-primary { background-color: var(--accent-color); color: white; box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3); }
+        .btn-primary:hover { background-color: #059669; transform: translateY(-2px); }
+
+        /* 개별 페이지 특화 스타일 */
+        .project-list { display: flex; flex-direction: column; gap: 3rem; }
+        .project-item { display: flex; gap: 3rem; align-items: center; padding: 2.5rem; border-radius: 16px; background-color: var(--bg-alt); border: 1px solid var(--border-color); }
+        .project-img { flex: 1; background-color: #BAE6FD; height: 250px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-weight: bold; font-size: 1.2rem; overflow: hidden; }
+        .project-info { flex: 1.5; }
+        .project-info h3 { font-size: 1.5rem; color: var(--primary-color); margin-bottom: 0.5rem; }
+        .tags { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .tag { background-color: #E0F2FE; color: #0284C7; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+        .project-info p { color: var(--text-muted); margin-bottom: 1.5rem; word-break: keep-all; }
+
+        /* Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.7); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.3s ease; padding: 1rem; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content { background-color: white; border-radius: 16px; width: 100%; max-width: 600px; padding: 2.5rem; position: relative; transform: translateY(20px); transition: all 0.3s ease; }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        .close-modal { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; }
+
+        @media (max-width: 768px) { .project-item { flex-direction: column; } .project-img { width: 100%; } .nav-links { display: none; } .page-section { padding: 7rem 0 4rem; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html">Mun Haneul.</a></div>
+            <div class="nav-links">
+                <a href="about.html">소개</a>
+                <a href="strengths.html">가치관</a>
+                <a href="projects.html" class="active">프로젝트</a>
+                <a href="tech.html">기술스택</a>
+                <a href="#footer">연락처</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="page-section" id="projects">
+        <div class="container fade-in">
+            <h2 class="section-title">Projects & Experiences</h2>
+            <div class="project-list">
+                
+                <div class="project-item">
+                    <div class="project-img">
+                        <span class="material-symbols-outlined" style="font-size: 4rem;">menu_book</span>
+                    </div>
+                    <div class="project-info">
+                        <h3>전공 서적 중고 거래 플랫폼 구축</h3>
+                        <div class="tags">
+                            <span class="tag">HTML/CSS/JS</span><span class="tag">Python</span><span class="tag">MySQL</span><span class="tag">DB 모델링</span>
+                        </div>
+                        <p>소셜 로그인 및 초회 한정 대학생 인증, 지역 인증을 도입하여 안전한 중고거래 플랫폼을 구축했습니다. 시스템 아키텍처 총괄 및 데이터베이스 모델링을 담당했습니다.</p>
+                        <button class="btn btn-primary btn-modal" data-title="전공 서적 중고 거래 플랫폼" data-desc="홍익대학교 졸업 프로젝트 경진대회 장려상 수상작입니다. 프론트엔드 화면 구성부터 백엔드 데이터베이스(MySQL) 설계까지 참여하여, 사용자 인증 과정의 보안성과 트래픽이 몰릴 때의 인프라 가용성을 중점적으로 관리했습니다.">상세 성과 보기</button>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <div class="project-img">
+                        <span class="material-symbols-outlined" style="font-size: 4rem;">how_to_vote</span>
+                    </div>
+                    <div class="project-info">
+                        <h3>대선 결과 예측 AI 분석 시스템</h3>
+                        <div class="tags">
+                            <span class="tag">Python</span><span class="tag">Machine Learning</span><span class="tag">Data Analysis</span>
+                        </div>
+                        <p>여론조사 지지율 데이터와 소셜 미디어의 감성 데이터를 종합적으로 수집·분석하여, 대통령 선거의 향방을 예측하는 인공지능 모델을 개발했습니다.</p>
+                        <button class="btn btn-primary btn-modal" data-title="대선 결과 예측 AI 분석 시스템" data-desc="Python을 활용하여 방대한 데이터를 크롤링 및 전처리하는 파이프라인을 구축했습니다. 특히, 딥러닝 모델을 적용하여 시계열에 따른 여론 동향을 텍스트 분석 기법으로 파악하고, 모델 예측의 신뢰도를 한층 높인 경험이 있습니다.">상세 성과 보기</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer">
+        <div class="container fade-in">
+            <div class="contact-info">
+                <div class="contact-item"><span class="material-symbols-outlined">person</span><span>문하늘 (Mun Haneul)</span></div>
+                <div class="contact-item"><span class="material-symbols-outlined">phone_iphone</span><span>010-2278-4303</span></div>
+                <div class="contact-item"><span class="material-symbols-outlined">mail</span><span>melody0404@naver.com</span></div>
+            </div>
+            <p>© 2026 Mun Haneul. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 팝업 모달 -->
+    <div class="modal-overlay" id="projectModal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h3 id="modalTitle" style="color: var(--primary-color); font-size: 1.5rem; margin-bottom: 1rem;">프로젝트 제목</h3>
+            <p id="modalDesc" style="color: var(--text-main); line-height: 1.7; word-break: keep-all;">상세 설명</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 페이드인 애니메이션
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('appear'); } });
+            }, { threshold: 0.1 });
+            fadeElements.forEach(el => observer.observe(el));
+
+            // 모달 로직
+            const modalOverlay = document.getElementById('projectModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDesc = document.getElementById('modalDesc');
+            const closeBtn = document.querySelector('.close-modal');
+            const modalButtons = document.querySelectorAll('.btn-modal');
+
+            modalButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    modalTitle.textContent = e.target.getAttribute('data-title');
+                    modalDesc.textContent = e.target.getAttribute('data-desc');
+                    modalOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden'; 
+                });
+            });
+
+            closeBtn.addEventListener('click', () => {
+                modalOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; 
+            });
+
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    modalOverlay.classList.remove('active'); document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
